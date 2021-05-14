@@ -14,7 +14,9 @@ public extension UIViewController {
     let nav = UINavigationController(rootViewController: self)
     nav.tabBarItem.title = tabBarTitle
     nav.tabBarItem.image = tabBarImage
-    nav.navigationBar.prefersLargeTitles = true
+    if #available(iOS 11.0, *) {
+      nav.navigationBar.prefersLargeTitles = true
+    }
     navigationItem.title = tabBarTitle
     view.backgroundColor = .white
     return nav

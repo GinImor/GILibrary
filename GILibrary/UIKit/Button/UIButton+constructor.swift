@@ -10,6 +10,7 @@ import UIKit
 
 public extension UIButton {
   
+  @available(iOS 13.0, *)
   static func system(imageName: String, size: CGFloat = 22, textStyle: UIFont.TextStyle? = nil, tintColor: UIColor) ->
     UIButton {
     let button = UIButton(type: .system)

@@ -10,6 +10,7 @@ import UIKit
 
 public extension UIImageView {
   
+  @available(iOS 13.0, *)
   static func system(imageName: String, size: CGFloat = 44, textStyle: UIFont.TextStyle? = nil, tintColor: UIColor? =
   nil) -> UIImageView {
     let imageView = UIImageView()

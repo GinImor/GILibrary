@@ -134,7 +134,13 @@ public extension AnchorObject {
     value: CGFloat = 0,
     constraintsHandler: (([NSLayoutConstraint]) -> Void)? = nil
   ) -> Self {
-    guard let _linedObject = linedObject ?? defaultAnchoredView?.safeAreaLayoutGuide else { return self }
+    let potentialLinedObject: AnchorObject?
+    if #available(iOS 11.0, *) {
+      potentialLinedObject = defaultAnchoredView?.safeAreaLayoutGuide
+    } else {
+      potentialLinedObject = defaultAnchoredView
+    }
+    guard let _linedObject = linedObject ?? potentialLinedObject else { return self }
     var constraints = [NSLayoutConstraint]()
     if anchor == .horizontal {
       constraints.append(leadingAnchor.constraint(equalTo: _linedObject.leadingAnchor, constant: value))
@@ -167,7 +173,13 @@ public extension AnchorObject {
     value: CGFloat = 0,
     constraintsHandler: (([NSLayoutConstraint]) -> Void)? = nil
   ) -> Self {
-    guard let _linedObject = linedObject ?? defaultAnchoredView?.safeAreaLayoutGuide else { return self }
+    let potentialLinedObject: AnchorObject?
+    if #available(iOS 11.0, *) {
+      potentialLinedObject = defaultAnchoredView?.safeAreaLayoutGuide
+    } else {
+      potentialLinedObject = defaultAnchoredView
+    }
+    guard let _linedObject = linedObject ?? potentialLinedObject else { return self }
     let constraints: [NSLayoutConstraint]
     if anchor == .vertical {
       constraints = [
@@ -200,7 +212,13 @@ public extension AnchorObject {
     edgeInsets: UIEdgeInsets = .zero,
     constraintsHandler: (([NSLayoutConstraint]) -> Void)? = nil
   ) -> Self {
-    guard let _filledObject = filledObject ?? defaultAnchoredView?.safeAreaLayoutGuide else { return self }
+    let potentialFilledObject: AnchorObject?
+    if #available(iOS 11.0, *) {
+      potentialFilledObject = defaultAnchoredView?.safeAreaLayoutGuide
+    } else {
+      potentialFilledObject = defaultAnchoredView
+    }
+    guard let _filledObject = filledObject ?? potentialFilledObject else { return self }
     let constraints = [
       topAnchor.constraint(equalTo: _filledObject.topAnchor, constant: edgeInsets.top),
       leadingAnchor.constraint(equalTo: _filledObject.leadingAnchor, constant: edgeInsets.left),
@@ -218,7 +236,13 @@ public extension AnchorObject {
     vector: CGVector = .zero,
     constraintsHandler: (([NSLayoutConstraint]) -> Void)? = nil
   ) -> Self {
-    guard let _centeredObject = centeredObject ?? defaultAnchoredView?.safeAreaLayoutGuide else { return self }
+    let potentialCenteredObject: AnchorObject?
+    if #available(iOS 11.0, *) {
+      potentialCenteredObject = defaultAnchoredView?.safeAreaLayoutGuide
+    } else {
+      potentialCenteredObject = defaultAnchoredView
+    }
+    guard let _centeredObject = centeredObject ?? potentialCenteredObject else { return self }
     let constraints = [
       centerXAnchor.constraint(equalTo: _centeredObject.centerXAnchor, constant: vector.dx),
       centerYAnchor.constraint(equalTo: _centeredObject.centerYAnchor, constant: vector.dy)
@@ -237,7 +261,13 @@ public extension AnchorObject {
     heightDelta: CGFloat = 0,
     constraintsHandler: (([NSLayoutConstraint]) -> Void)? = nil
 ) -> Self {
-    guard let _sizedObject = sizedObject ?? defaultAnchoredView?.safeAreaLayoutGuide else { return self }
+    let potentialSizedObject: AnchorObject?
+    if #available(iOS 11.0, *) {
+      potentialSizedObject = defaultAnchoredView?.safeAreaLayoutGuide
+    } else {
+      potentialSizedObject = defaultAnchoredView
+    }
+    guard let _sizedObject = sizedObject ?? potentialSizedObject else { return self }
     let constraints = [
       widthAnchor.constraint(equalTo: _sizedObject.widthAnchor, multiplier: widthMultiplier, constant: widthDelta),
       heightAnchor.constraint(equalTo: _sizedObject.heightAnchor, multiplier: heightMultiplier, constant: heightDelta)
@@ -263,8 +293,8 @@ public extension AnchorObject {
     var uikitAnchors: [NSLayoutDimension] = []
     for i in 0..<2 {
       switch anchors[i] {
-      case .width: uikitAnchors[i] = anchoringObjects[i].widthAnchor
-      case .height: uikitAnchors[i] = anchoringObjects[i].heightAnchor
+      case .width: uikitAnchors.append(anchoringObjects[i].widthAnchor)
+      case .height: uikitAnchors.append(anchoringObjects[i].heightAnchor)
       }
     }
     let constraint = uikitAnchors[0].constraint(equalTo: uikitAnchors[1], multiplier: multiplier, constant: delta)
