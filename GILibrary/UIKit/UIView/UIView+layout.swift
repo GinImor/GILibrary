@@ -281,12 +281,12 @@ public extension AnchorObject {
   func sizing(
     _ anchor: SizeAnchor,
     to sizedObject: AnchorObject? = nil,
-    _ sizedAnchor: SizeAnchor?,
+    _ sizedAnchor: SizeAnchor? = nil,
     multiplier: CGFloat = 1.0,
     delta: CGFloat = 0,
     constraintsHandler: (([NSLayoutConstraint]) -> Void)? = nil
   ) -> Self {
-    let _sizedObject = sizedObject ?? self
+    guard let _sizedObject = sizedObject ?? defaultAnchoredView else { return self }
     let _sizedAnchor = sizedAnchor ?? anchor
     let anchoringObjects = [self, _sizedObject]
     let anchors = [anchor, _sizedAnchor]

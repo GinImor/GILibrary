@@ -48,7 +48,9 @@ open class GIListController<Row>: UITableViewController {
   
   public func setList(_ list: [Row]) {
     self.list = list
-    tableView.reloadData()
+    DispatchQueue.main.async {
+      self.tableView.reloadData()
+    }
   }
   
   open override func viewDidLoad() {
