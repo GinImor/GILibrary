@@ -8,8 +8,12 @@
 
 import UIKit
 
+public protocol StackFactory {
+  func vStack(_ views: [UIView]) -> UIStackView
+  func hStack(_ views: [UIView]) -> UIStackView
+}
+
 public extension UIStackView {
-  
   convenience init(_ views: [UIView], _ spacing: CGFloat = 8.0) {
     self.init(arrangedSubviews: views)
     self.spacing = spacing
@@ -31,22 +35,27 @@ public extension UIStackView {
   }
 }
 
-public func vStack(_ views: UIView...) -> UIStackView {
-  let stackView = UIStackView(views)
-  stackView.axis = .vertical
-  return stackView
-}
+public extension UIView {}
+public extension UIViewController {}
 
-public func vStack(_ views: [UIView]) -> UIStackView {
-  let stackView = UIStackView(views)
-  stackView.axis = .vertical
-  return stackView
-}
+public extension StackFactory {
+  func vStack(_ views: UIView...) -> UIStackView {
+    let stackView = UIStackView(views)
+    stackView.axis = .vertical
+    return stackView
+  }
 
-public func hStack(_ views: UIView...) -> UIStackView {
-  UIStackView(views)
-}
+  func vStack(_ views: [UIView]) -> UIStackView {
+    let stackView = UIStackView(views)
+    stackView.axis = .vertical
+    return stackView
+  }
 
-public func hStack(_ views: [UIView]) -> UIStackView {
-  UIStackView(views)
+  func hStack(_ views: UIView...) -> UIStackView {
+    UIStackView(views)
+  }
+
+  func hStack(_ views: [UIView]) -> UIStackView {
+    UIStackView(views)
+  }
 }
